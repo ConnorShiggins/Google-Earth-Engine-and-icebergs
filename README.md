@@ -23,7 +23,7 @@ You may wish to define a date range for your data, but with ArcitcDEM data being
 
 ![Date](https://user-images.githubusercontent.com/63847501/183455053-80332e28-f08b-4b79-9490-0159728e8c06.PNG)
 
-Now the data will load to the map where: 1) the first ArcticDEM scene in the collection will load and 2) the detected iceberg binary image will overlay so the data can be visuaised. Hit the export buttom in the bottom right of the GUI to promopt a task.
+Now the data will load to the map where: 1) the first ArcticDEM scene in the collection will load and 2) the detected iceberg binary image will overlay so the data can be visuaised. Hit the export buttom in the bottom right of the GUI to prompt a task.
 
 ![binary](https://user-images.githubusercontent.com/63847501/183455527-d95bec9d-6555-49a9-b92b-dd4b637abd09.PNG)
 
