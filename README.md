@@ -10,11 +10,13 @@ The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf80
 
 This tool was designed to allow users with no coding ability to generate their own dataset of icebergs. All the user needs to do to attain this dataset is define a region of interest (ROI) and click a few buttons for the data to export to their Google Drive!
 
-Below is a quick run through of how best to use the GUI and attain the data which is required. 
-
 ## **Potential error due to lack of data availability**
 
-At the bottom of the documentation, a typical error which may arise from this code will be shown. This error may arise because of the spatial limiation of ArcticDEM in the near-terminus regions of Greenland's outlets. This means 1) your defined ROI is too large or 2) no data exists for the glacier in question. To start the project again to try both solutions, just hit the 'Run' bar at the top and a new project will launch. It is suggested to keep your ROI limited in close proximity to the ice front as fjord wide analysis has not been validated becasue of the lack of spatial data extent. 
+Below a typical error which may arise from this code will be shown. This error may arise because of the spatial limiation of ArcticDEM in the near-terminus regions of Greenland's outlets. This means 1) your defined ROI is too large or 2) no data exists for the glacier in question. To start the project again to try both solutions, just hit the 'Run' bar at the top and a new project will launch. It is suggested to keep your ROI limited in close proximity to the ice front as fjord wide analysis has not been validated becasue of the lack of spatial data extent. 
+
+![Error](https://user-images.githubusercontent.com/63847501/183460747-32c2da06-c1bb-43b6-9ada-917a3de9cf25.PNG)
+
+Below is a quick run through of how best to use the GUI and attain the data which is required. 
 
 # **Using the tool**
 
@@ -49,7 +51,7 @@ Once the 'Tasks' bar has been selected, press the 'RUN' button next to the 'Iceb
 ![Run](https://user-images.githubusercontent.com/63847501/183456545-88c29797-b3b5-4a2f-bce6-9c99eea2540a.PNG)
 
 ### **Step 7)** 
-The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The defualt file format is Shapefile ('SHP'), but you can choose other formats which you see fit: 
+The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The default file format is Shapefile ('SHP'), but you can choose other formats which you see fit: 
 
 ![Export](https://user-images.githubusercontent.com/63847501/183457864-e202779e-71de-45c6-9a0a-e105b517e744.PNG)
 
@@ -61,5 +63,4 @@ Happy iceberging and if you have any questions regarding the tool, please contac
 
 Below is an example of the console error after step 3). See above for explaination and solutions to avoid error. 
 
-![Error](https://user-images.githubusercontent.com/63847501/183460747-32c2da06-c1bb-43b6-9ada-917a3de9cf25.PNG)
 
