@@ -13,7 +13,8 @@ The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf80
 
 # **Using the tool**
 
-### **Step 1)** Once the GUI is accessed through the link above, the GEE broswer will open up as shown below (and click 'New Project'):
+### **Step 1)** 
+Once the GUI is accessed through the link above, the GEE broswer will open up as shown below (and click 'New Project'):
 
 ![homepage](https://user-images.githubusercontent.com/63847501/183452712-b48e22b9-ae8d-4be4-8ca7-0672714face4.PNG)
 
