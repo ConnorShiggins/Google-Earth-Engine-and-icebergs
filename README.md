@@ -37,7 +37,7 @@ Once the 'Tasks' bar has been selected, press the 'RUN' button next to the 'Iceb
 
 The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The defualt file format is Shapefile ('SHP'), but you can choose other formats which you see fit: 
 
-![Run](https://user-images.githubusercontent.com/63847501/183457154-7be058f4-e571-40b0-81a4-88d3600a97c0.PNG)
+![Export](https://user-images.githubusercontent.com/63847501/183457864-e202779e-71de-45c6-9a0a-e105b517e744.PNG)
 
 And that's it! You have your iceberg dataset. All you have to do now is navigate to your Google Drive and whatever you named your 'Drive folder', the data will appear in there!
 
