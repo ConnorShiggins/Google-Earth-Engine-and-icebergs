@@ -1,15 +1,20 @@
 # Google-Earth-Engine-and-icebergs
+
+# **Quick introduction**
+
 This code uses ArcticDEM version 3 2-meter strip data to automatically detect icebergs in Google Earth Engine (GEE)
 
 To be able to use this graphical user interface (GUI) and generate a dataset of icebergs, a user needs to ensure they have a GEE account (free for individual license). If you do not have an account yet, you can register for one here: https://earthengine.google.com/new_signup/. The authentication process could take a few days to approve the license.
+
+The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf807cdefe8c107783e 
 
 This tool was designed to allow users with no coding ability to generate their own dataset of icebergs. All the user needs to do to attain this dataset is define a region of interest (ROI) and click a few buttons for the data to export to their Google Drive!
 
 Below is a quick run through of how best to use the GUI and attain the data which is required. 
 
-At the bottom of the documentation, a typical error which may arise from this code will be shown. This error may arise because of the spatial limiation of ArcticDEM in the near-terminus regions of Greenland's outlets. This means 1) your defined ROI is too large or 2) no data exists for the glacier in question. To start the project again to try both solutions, just hit the 'Run' bar at the top and a new project will launch. It is suggested to keep your ROI limited in close proximity to the ice front as fjord wide analysis has not been validated becasue of the lack of spatial data extent. 
+## **Potential error due to lack of data availability**
 
-The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf807cdefe8c107783e 
+At the bottom of the documentation, a typical error which may arise from this code will be shown. This error may arise because of the spatial limiation of ArcticDEM in the near-terminus regions of Greenland's outlets. This means 1) your defined ROI is too large or 2) no data exists for the glacier in question. To start the project again to try both solutions, just hit the 'Run' bar at the top and a new project will launch. It is suggested to keep your ROI limited in close proximity to the ice front as fjord wide analysis has not been validated becasue of the lack of spatial data extent. 
 
 # **Using the tool**
 
