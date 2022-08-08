@@ -17,27 +17,33 @@ The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf80
 
 ![homepage](https://user-images.githubusercontent.com/63847501/183452712-b48e22b9-ae8d-4be4-8ca7-0672714face4.PNG)
 
-### **Step 2)** A new project has now started so you can now navigate to your glacier of choice (in this example we are using KNS on the southwest coast of Greenland). Draw your ROI before clicking 'OK': 
+### **Step 2)** 
+A new project has now started so you can now navigate to your glacier of choice (in this example we are using KNS on the southwest coast of Greenland). Draw your ROI before clicking 'OK': 
 
 ![ROi](https://user-images.githubusercontent.com/63847501/183454614-b2fed269-2cb6-4669-a9a2-4017b0371808.PNG)
 
-### **Step 3)** You may wish to define a date range for your data, but with ArcitcDEM data being temporally limited it is suggested to 'OK' the default range provided: 
+### **Step 3)** 
+You may wish to define a date range for your data, but with ArcitcDEM data being temporally limited it is suggested to 'OK' the default range provided: 
 
 ![Date](https://user-images.githubusercontent.com/63847501/183455053-80332e28-f08b-4b79-9490-0159728e8c06.PNG)
 
-### **Step 4)** Now the data will load to the map where: 1) the first ArcticDEM scene in the collection will load and 2) the detected iceberg binary image will overlay so the data can be visuaised. Hit the export buttom in the bottom right of the GUI to prompt a task.
+### **Step 4)**
+Now the data will load to the map where: 1) the first ArcticDEM scene in the collection will load and 2) the detected iceberg binary image will overlay so the data can be visuaised. Hit the export buttom in the bottom right of the GUI to prompt a task.
 
 ![binary](https://user-images.githubusercontent.com/63847501/183455527-d95bec9d-6555-49a9-b92b-dd4b637abd09.PNG)
 
-### **Step 5)** The dataset has now been generated, however you have not exported the data yet! A warning bar will appear once the export button has been clicked on the GUI, diverting the user to the 'Tasks' bar (highlighted by the orange colour on the top right of the console). You then need to navigate to the task bar: 
+### **Step 5)**
+The dataset has now been generated, however you have not exported the data yet! A warning bar will appear once the export button has been clicked on the GUI, diverting the user to the 'Tasks' bar (highlighted by the orange colour on the top right of the console). You then need to navigate to the task bar: 
 
 ![Task bar](https://user-images.githubusercontent.com/63847501/183456239-5b7d8d1d-a9bf-44a7-bdd9-a8f8702756ff.PNG)
 
-### **Step 6)** Once the 'Tasks' bar has been selected, press the 'RUN' button next to the 'Iceberg_dataset_file': 
+### **Step 6)** 
+Once the 'Tasks' bar has been selected, press the 'RUN' button next to the 'Iceberg_dataset_file': 
 
 ![Run](https://user-images.githubusercontent.com/63847501/183456545-88c29797-b3b5-4a2f-bce6-9c99eea2540a.PNG)
 
-### **Step 7)** The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The defualt file format is Shapefile ('SHP'), but you can choose other formats which you see fit: 
+### **Step 7)** 
+The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The defualt file format is Shapefile ('SHP'), but you can choose other formats which you see fit: 
 
 ![Export](https://user-images.githubusercontent.com/63847501/183457864-e202779e-71de-45c6-9a0a-e105b517e744.PNG)
 
