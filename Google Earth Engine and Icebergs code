@@ -1,0 +1,427 @@
+//_______________________________________________________________________________________________________________________
+//This code automaticlly detects icebergs using ArcticDEM 
+//Written by Connor Shiggins, PhD researcher, University of Liverpool (2022)
+
+Map.setOptions("SATELLITE");
+Map.setCenter(0,45,2);
+
+//_______________________________________________________________________________________________________________________
+//Welcome homepage: starting a new project 
+
+var newProjectPanel = ui.Panel({
+    style: {
+    position: 'top-center'
+    }
+  });
+var toolTitle = ui.Label({
+      value: 'Icebergs and ArcticDEM',
+      style: {
+        margin: '1px 10px 1px 10px',
+        fontSize: '24px',
+        fontWeight: 'bold'
+        }});
+var nameAndAffiliation = ui.Label({value:'Written by Connor Shiggins, Department of Geography and Planning, School of Enviornmental Sciences, University of Liverpool',
+      style: {
+        margin: '1px 10px 1px 10px',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: '14px'
+        }});
+var emailLabel = ui.Label({value:'Email: Connor.Shiggins@Liverpool.ac.uk',
+      style: {
+        margin: '1px 10px 1px 10px',
+        textAlign: 'center',
+        fontSize: '14px',
+        color: 'blue'
+        }});
+var twitterLabel = ui.Label({value:'Twitter: @glacialicon',
+      style: {
+        margin: '1px 10px 1px 10px',
+        textAlign: 'center',
+        fontSize: '12px',
+        color: 'blue'
+        }});
+var newProject=ui.Button('New Project');
+newProjectPanel.add(toolTitle);
+newProjectPanel.add(nameAndAffiliation);
+newProjectPanel.add(emailLabel);
+newProjectPanel.add(twitterLabel);
+newProjectPanel.add(newProject);
+Map.add(newProjectPanel);
+
+//_______________________________________________________________________________________________________________________
+//Remove the welcome panel and provides instructions to draw ROI polygon
+
+newProject.onClick(function() {
+  Map.remove(newProjectPanel);//Removes new project panel 
+  var polygon = [];
+  var geometry = null;
+  var definePolygon = ee.List([]);
+  Map.onClick(function (polygonCoordinates) {//Function for drawing ROI
+        for (var i = 0; i < Map.layers().length(); i++) {
+            var layer = Map.layers().get(i);
+            if ('Polygon' === layer.get('name')) {
+                Map.remove(layer);
+            }}
+        polygon.push([polygonCoordinates.lon, polygonCoordinates.lat]);
+        if (polygon.length < 3) {
+            if (polygon.length == 1) {
+                geometry = ee.Geometry.Point(polygon[0]);
+            } else {
+                geometry = ee.Geometry.LineString(polygon);
+            }
+        } else {
+            geometry = ee.Geometry.Polygon([polygon]);
+        }
+        var manualPolygonDrawn = ui.Map.Layer({
+            'eeObject': ee.FeatureCollection(geometry).style({
+                color: 'ff0000',
+                fillColor: 'ff000000'
+            }),
+            'visParams': {},
+            'name': 'Polygon',
+            'shown': true,
+            'opacity': 0.8
+        });
+        return Map.layers().insert(Map.layers().length(), manualPolygonDrawn);
+});
+  var roiPolygonButton = ui.Button({
+    label: 'OK',
+    onClick: function () {
+      if (roiPolygonBox.getValue()===undefined){
+        definePolygon = definePolygon.add(ee.Feature(ee.Geometry.Polygon([polygon])));
+        polygon = [];
+        for (var i = 0; i < Map.layers().length(); i++) {
+            var layer = Map.layers().get(i);
+            if ('feature collection' === layer.get('name')) {
+                Map.remove(layer);
+            }}
+        Map.remove(Map.layers().get(0));
+        var geometry = ee.FeatureCollection(definePolygon);
+        Map.addLayer(geometry, {color: 'red'}, 'ROI');
+      }
+      else {
+        var geometry = ee.FeatureCollection(roiPolygonBox.getValue());
+        Map.addLayer(geometry, {color: 'red'}, 'ROI');//Adding polygon to the map
+      }
+      Map.remove(roiWindow);
+      Map.unlisten();
+      Map.style().set('cursor', 'hand');
+      
+//_______________________________________________________________________________________________________________________
+//Define data range panel for data collection
+
+      var dateBoxTitle = ui.Label({value: 'Define date range of interest',
+      style: {
+        margin: '10px 10px 0px 7px',
+        fontSize: '16px',
+        fontWeight: 'bold'
+        }});
+      var dateBox = ui.Label({value: 'Default date ranges are pre-defined',
+      style: {
+        margin: '5px 10px 5px 7px',
+        fontSize: '14px',
+        }});
+      var firstDateWords = ui.Label({value: 'Start date (YYYY-MM-DD)',
+      style: {
+        margin: '10px 10px 0px 7px'
+      }});
+      var firstDateBox = ui.Textbox({
+        placeholder: 'Default: 2009-01-01'
+      });
+      var finalDateWords = ui.Label({value: 'End date (YYYY-MM-DD)',
+      style: {
+        margin: '10px 10px 0px 7px'
+      }});
+      var finalDateBox = ui.Textbox({
+        placeholder: 'Default: 2018-01-01'
+      });
+      var DEMTab = ui.Label({value: 'When you hit OK - An ArcitcDEM image will load on the map',
+      style: {
+        margin: '20px 10px 5px 7px',
+        fontSize: '16px',
+        fontWeight: 'bold'
+        }});
+      var exportInfo = ui.Label({value: 'Once the image has loaded, click the export data button',
+      style: {
+        margin: '20px 10px 5px 7px',
+        fontSize: '14px'
+        }});
+      var dateMenu = ui.Panel({
+        style: {
+          position: 'top-center',
+          padding: '8px 15px'
+          }});
+      var dateButton=ui.Button('OK');
+      dateMenu.add(dateBoxTitle);
+      dateMenu.add(dateBox);
+      dateMenu.add(firstDateWords);
+      dateMenu.add(firstDateBox);
+      dateMenu.add(finalDateWords);
+      dateMenu.add(finalDateBox);
+      dateMenu.add(DEMTab);
+      dateMenu.add(exportInfo);
+      dateMenu.add(dateButton);
+      Map.add(dateMenu);
+        dateButton.onClick(function(){
+          Map.remove(dateMenu);
+          Map.layers().get(0).setShown(false);
+//_______________________________________________________________________________________________________________________
+//Parameters 
+
+var geoidAddtion = ee.Number(10);
+var imageAreaCoverage = ee.Number(0.80);
+var icebergDetectionElevation = ee.Number(1.5);
+var startMonth = ee.Number(7);
+var endMonth = ee.Number(10);
+var iceDensity = ee.Number(920);//kg/m³
+var seawater = ee.Number(1025);//kg/m³
+var gravity = ee.Number(9.81);//m/s²
+
+//_______________________________________________________________________________________________________________________
+//Define geometry and mask for DEMs to be clipped 
+
+var maskGeometry = geometry.geometry();
+var maskRoi = ee.Image.constant(1).clip(maskGeometry);//Mask geometry 
+var ROIArea = ee.Feature(maskGeometry).geometry().area(0.01,'EPSG:3413');
+
+//_______________________________________________________________________________________________________________________
+//Geoid BedMachine V4 import
+
+var geoid = ee.Image('projects/ee-connorshiggins123456789/assets/Geoid_layer');
+var geoidValue = geoid.select('b1').updateMask(maskRoi).reduceRegion({
+  reducer:ee.Reducer.mean(),
+  geometry:maskGeometry,
+  scale: 150,
+  maxPixels:1e12
+});
+
+//_______________________________________________________________________________________________________________________
+//ActicDEM import and filtered ROI
+
+var ArcticDemCollection = ee.ImageCollection('UMN/PGC/ArcticDEM/V3/2m')
+.filter(ee.Filter.calendarRange(startMonth,endMonth,'month')).filterBounds(maskGeometry).sort('system:time_start');
+
+var maskedColl = ArcticDemCollection.map(function(img){
+      return img.updateMask(maskRoi);
+}).filter(ee.Filter.equals({leftField: 'acqDate1', rightField: 'acqDate2'}));
+
+//_______________________________________________________________________________________________________________________
+//Two image collection filters: 1) 90th percentile must be within 10 m of geoid 
+                            //  2) 80% of image has to be within the ROI area 
+
+var filteringCollection = ee.ImageCollection(maskedColl).select('elevation').map(function(img){
+  var pc90 = ee.Image(img).reduceRegion({//1st filter: 90th percentile within 10 m of geoid
+                                        geometry: maskGeometry,  
+                                        reducer: ee.Reducer.percentile([90]), 
+                                        scale: 2,
+                                        crs:'EPSG:3413',
+                                        maxPixels:1e12});
+                                        
+  return img.set('pc90', pc90.values().get(0));
+}).filterMetadata('pc90', 'less_than', ee.Number(geoidValue.get('b1')).add(geoidAddtion));
+
+var areaFilter = ee.ImageCollection(filteringCollection).map(function(img){//2nd filter: every image must cover 80% of the ROI
+  var vectors = ee.Image(img).gte(-99999).reduceToVectors({
+                                        reducer: ee.Reducer.countEvery(),
+                                        geometry: maskGeometry, 
+                                        scale:20,
+                                        maxPixels:1e12, 
+                                        crs:'EPSG:3413'
+                                      }).map(function(feat){
+                                              return ee.Feature(feat).set('area', ee.Feature(feat).area(0.01, 'EPSG:3413'));
+                                      });
+  
+  return ee.Image(img).set('area', ee.FeatureCollection(vectors).aggregate_sum('area'));
+});
+var imageCollectionFiltered = ee.ImageCollection(areaFilter).filter(ee.Filter.gte('area', ee.Number(ROIArea).multiply(imageAreaCoverage))); 
+print('Filtered image collection', imageCollectionFiltered);
+
+//_______________________________________________________________________________________________________________________
+//Print image to the map
+
+var image0 = imageCollectionFiltered.toList(99).get(0);
+Map.addLayer(ee.Terrain.hillshade(image0),{min:0,max:255}, 'Original DEM');
+
+//_______________________________________________________________________________________________________________________
+//Calculating sea level and filtering metadata properties 
+
+var icebergDetectionCollection = ee.ImageCollection(imageCollectionFiltered).map(function(img){
+  var histogram = ee.Image(img).select('elevation').reduceRegion({
+      reducer: ee.Reducer.autoHistogram(),//Find elevation with the highest pixel count
+      geometry: maskGeometry,
+      scale: 2,
+      maxPixels: 1e12,
+      crs:'EPSG:3413'
+    });
+  var histogramValues = ee.Array(histogram.values().get(0));//Get elevation column 
+  var maxCountIndex = histogramValues.argmax().get(0);//Find elevation with highest pixel count
+  var seaLevel = ee.Number(histogramValues.get([maxCountIndex, 0]));//Sea level = elevation with highest pixel count 
+  var icebergDetectionThreshold = ee.Number(seaLevel).add(icebergDetectionElevation);//Any object at detection threshold = iceberg 
+  var icebergsOnly = ee.Image(img.select('elevation')).gte(icebergDetectionThreshold).rename('bergMask');//Create binary image of detected icebergs 
+  var SLcorrected = ee.Image(img.select('elevation')).subtract(seaLevel).rename('SLcorrected');//Correct DEM to sea level 
+
+  return img.addBands([icebergsOnly,SLcorrected]).set('histogramValues', histogramValues
+            ,'icebergDetectionThreshold', icebergDetectionThreshold
+            ,'seaLevel', seaLevel
+            ,'Date', img.get('acqDate1'));
+
+});
+print('Iceberg detection collection', icebergDetectionCollection);
+
+//_______________________________________________________________________________________________________________________
+//Visualise binary image of detected icebergs 
+
+var getImage1 = icebergDetectionCollection.map(function(img1){
+  return img1.select('bergMask');
+});
+var finalImg = getImage1.toList(99).get(0);
+Map.addLayer(ee.Image(finalImg),{}, 'Binary of detected icebergs');
+
+//_______________________________________________________________________________________________________________________
+//Cast image collection to feature collection of feature collection and flatten
+
+//Assing icebergs their metadata: 1) Masked iceberg binary alone is firstly reduced to vectors 
+//                                2) Use the DEM band for iceberg statistics, e.g. volume, freeboard height              
+
+var flattenedFeatureCollection = ee.ImageCollection(icebergDetectionCollection).map(function(img){
+  var selectBergMask = ee.Image(img).select('bergMask');
+  var binaryReduction = ee.Image(selectBergMask).reduceToVectors({//Reduces masked binary image (0,1) to vectors
+        geometry:maskGeometry, 
+        scale:2,
+        geometryType: 'Polygon',
+        crs: 'EPSG:3413',
+        maxPixels: 1e12,
+        tileScale:4
+  });
+  
+  var seaLevelDEM = img.select('SLcorrected');//Using sea level corrected DEM to determine iceberg metadata 
+  
+  var icebergHeightCalc = ee.FeatureCollection(binaryReduction).map(function(feat){//Function (1): calculate iceberg freeboard
+    var icebergFreeboard = ee.Number(ee.Image(seaLevelDEM).reduceRegion({
+          reducer: ee.Reducer.max(),
+          geometry: ee.Feature(feat).geometry(),
+          scale:2,
+          crs: 'EPSG:3413',
+          maxPixels: 1e12,
+    }).get('SLcorrected'));//Applies sea level corrected DEM for statistics for calculating maximum iceberg height 
+
+    return ee.Feature(feat).set('Date',(ee.Number(img.get('acqDate1'))),
+                                'SeaLevel', ee.Number(img.get('seaLevel')),
+                                'Freeboard', icebergFreeboard);
+  });
+      
+  var icebergMetadata = ee.FeatureCollection(icebergHeightCalc).map(function(feat){//Function (2): calculate volume
+    var elevationForVolume = ee.Number(ee.Image(seaLevelDEM).reduceRegion({
+      reducer: ee.Reducer.sum(),
+      geometry: ee.Feature(feat).geometry(),
+      scale:2,
+      crs: 'EPSG:3413',
+      maxPixels: 1e12,
+    }).get('SLcorrected'));//Applies sea level corrected DEM for statistics for iceberg volume
+    
+    var volumeAboveSurface = ee.Number(elevationForVolume).multiply(4);//Calculate volume above surface 
+    var totalVolume = ee.Number(volumeAboveSurface).divide((ee.Number(1).subtract(iceDensity.divide(seawater))));
+    var volumeBelowSurface = ee.Number(totalVolume).subtract(ee.Number(volumeAboveSurface));//Calculate volume below surface 
+    var area = ee.Number(ee.Feature(feat).area(0.01,'EPSG:3413').round());//Calculate area
+    var icebergMass = ee.Number(iceDensity).multiply(ee.Number(totalVolume));//Calculate mass of iceberg (kg)
+    
+    return ee.Feature(feat).set('Volume', totalVolume//m³
+      ,'Area', area//m²,
+      ,'Volume', totalVolume
+      ,'VolAbove', volumeAboveSurface//m³,
+      ,'VolBelow', volumeBelowSurface//m³
+      ,'Mass', icebergMass//kg
+    ); 
+  });
+  
+  return ee.FeatureCollection(icebergMetadata);
+}).flatten();//Flattens the feature collection of feature collections to output indivdual icebergs 
+
+//_______________________________________________________________________________________________________________________
+//Removes any terminus section and/or fjord walls from dataset, falsely identifying an iceberg 
+
+var collection = ee.FeatureCollection(flattenedFeatureCollection).filter(ee.Filter.lt('Area', 100000))
+                                                                 .filter(ee.Filter.gte('Freeboard', 0))
+                                                                 .filter(ee.Filter.gte('Volume', 0))
+                                                                 .filter(ee.Filter.gte('count', 9))
+                                                                 .filter(ee.Filter.lt('count', 20000));
+print('Icebergs', collection.limit(30));
+
+//_______________________________________________________________________________________________________________________
+//Exporting the entire collection of icebergs 
+
+var exportPanel=ui.Panel({
+  style: {
+  position: 'bottom-right'}
+});
+var exportButton=ui.Button('Export');
+exportPanel.add(exportButton);
+Map.add(exportPanel);
+        exportButton.onClick(function(){
+          Export.table.toDrive({
+            collection: collection,
+            description: 'Iceberg_dataset_file',
+            fileFormat: 'SHP',
+            folder: 'Iceberg_dataset_folder'
+          });
+          Map.remove(exportPanel);
+          var dataExport=ui.Panel({
+          style: {
+          position: 'top-center'}
+            });
+          var exportWarning=ui.Label({value: 'WARNING: YOU HAVE NOT EXPORTED DATA YET - HEAD TO THE THE TASKS TAB AND HIT RUN',
+          style: {
+            fontSize: '16px',
+            fontWeight: 'bold',
+            color: 'red'
+            }});
+          var okButton=ui.Button('OK');
+          dataExport.add(exportWarning);
+          dataExport.add(okButton);
+          Map.add(dataExport);
+          okButton.onClick(function(){
+            Map.remove(dataExport);
+        });
+      });
+    });
+  }
+});
+
+//_______________________________________________________________________________________________________________________
+//Instructions for drawing ROI
+
+var roiBoxTitle = ui.Label({value: 'Draw region of interest (ROI)',
+  style: {
+  fontSize: '16px',
+  fontWeight: 'bold'
+}});
+var noteOnROI = ui.Label({value: 'Note: Due to ArcticDEM coverage, ensure ROI is limited close to the terminus',
+  style: {
+  fontSize: '14px',
+  fontWeight: 'bold'
+}});
+var roiInstructuction1 = ui.Label('1) Navigate to ROI');
+var roiInstructuction2 = ui.Label('2) Click on the map to draw a polygon ');
+var roiInstructuction3 = ui.Label('3) Hit OK to confirm the polygon as ROI');
+var redrawROI = ui.Label({value: 'If you wish to redraw your ROI, just hit run and start the process again',
+  style: {
+  fontSize: '12px',
+  fontWeight: 'bold'
+}});
+var roiPolygonBox=ui.Textbox({
+    });
+var roiWindow = ui.Panel({
+    style: {
+    position: 'top-left'
+    }});
+roiWindow.add(roiBoxTitle);
+roiWindow.add(noteOnROI);
+roiWindow.add(roiInstructuction1);
+roiWindow.add(roiInstructuction2);
+roiWindow.add(roiInstructuction3);
+roiWindow.add(redrawROI);
+roiWindow.add(roiPolygonButton);
+Map.add(roiWindow);
+Map.style().set('cursor', 'crosshair');
+  });
