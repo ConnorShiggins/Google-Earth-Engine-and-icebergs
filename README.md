@@ -11,7 +11,7 @@ At the bottom of the documentation, a typical error which may arise from this co
 
 The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf807cdefe8c107783e 
 
-**Using the tool**
+#**Using the tool**
 
 **Step 1)** Once the GUI is accessed through the link above, the GEE broswer will open up as shown below (and click 'New Project'):
 
