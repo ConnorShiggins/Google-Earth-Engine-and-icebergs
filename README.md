@@ -15,7 +15,7 @@ Below is a quick run through of how best to use the GUI and attain the data whic
 # **Using the tool**
 
 ### **Step 1)** 
-Once the GUI is accessed through the link above, the GEE broswer will open up as shown below (and click 'New Project'):
+Once the GUI is accessed through the link above, the GEE browser will open up as shown below (and click 'New Project'):
 
 ![homepage](https://user-images.githubusercontent.com/63847501/183452712-b48e22b9-ae8d-4be4-8ca7-0672714face4.PNG)
 
@@ -25,12 +25,12 @@ A new project has now started so you can now navigate to your glacier of choice 
 ![ROi](https://user-images.githubusercontent.com/63847501/183454614-b2fed269-2cb6-4669-a9a2-4017b0371808.PNG)
 
 ### **Step 3)** 
-You may wish to define a date range for your data, but with ArcitcDEM data being temporally limited it is suggested to 'OK' the default range provided: 
+You may wish to define a date range for your data, but with ArcticDEM data being temporally limited it is suggested to 'OK' the default range provided: 
 
 ![Date](https://user-images.githubusercontent.com/63847501/183455053-80332e28-f08b-4b79-9490-0159728e8c06.PNG)
 
 ### **Step 4)**
-Now the data will load to the map where: 1) the first ArcticDEM scene in the collection will load and 2) the detected iceberg binary image will overlay so the data can be visuaised. Hit the export buttom in the bottom right of the GUI to prompt a task.
+Now the data will load to the map where: 1) the first ArcticDEM scene in the collection will load and 2) the detected iceberg binary image will overlay so the data can be visualised. Hit the export button in the bottom right of the GUI to prompt a task.
 
 ![binary](https://user-images.githubusercontent.com/63847501/183455527-d95bec9d-6555-49a9-b92b-dd4b637abd09.PNG)
 
@@ -53,7 +53,7 @@ And that's it! You have your iceberg dataset. All you have to do now is navigate
 
 ## **Potential error due to lack of data availability**
 
-Below is a typical error which may arise from this code will be shown. This error may arise because of the spatial limiation of ArcticDEM in the near-terminus regions of Greenland's outlets. This means 1) your defined ROI is too large or 2) no data exists for the glacier in question. To start the project again to try both solutions, just hit the 'Run' bar at the top and a new project will launch. It is suggested to keep your ROI limited in close proximity to the ice front as fjord wide analysis has not been validated becasue of the lack of spatial data extent. 
+Below is a typical error which may arise from this code will be shown. This error may arise because of the spatial limitation of ArcticDEM in the near-terminus regions of Greenland's outlets. This means 1) your defined ROI is too large or 2) no data exists for the glacier in question. To start the project again to try both solutions, just hit the 'Run' bar at the top and a new project will launch. It is suggested to keep your ROI limited in close proximity to the ice front as fjord wide analysis has not been validated because of the lack of spatial data extent. 
 
 ![Error](https://user-images.githubusercontent.com/63847501/183460747-32c2da06-c1bb-43b6-9ada-917a3de9cf25.PNG)
 
