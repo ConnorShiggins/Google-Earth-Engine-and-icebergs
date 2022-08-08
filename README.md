@@ -2,13 +2,13 @@
 
 # **Quick introduction**
 
-This code uses ArcticDEM version 3 2-meter strip data to automatically detect icebergs in Google Earth Engine (GEE)
+This code uses ArcticDEM (version 3) 2-meter strip data to automatically detect icebergs in Google Earth Engine (GEE).
 
-To be able to use this graphical user interface (GUI) and generate a dataset of icebergs, a user needs to ensure they have a GEE account (free for individual license). If you do not have an account yet, you can register for one here: https://earthengine.google.com/new_signup/. The authentication process could take a few days to approve the license.
+This tool was designed to allow users with no coding ability to generate their own dataset of icebergs through a graphical user interface (GUI). All the user needs to do to attain this dataset is define a region of interest (ROI) and click a few buttons for the data to export to their Google Drive!
+
+To be able to use this GUI, a user needs to ensure they have a GEE account (free for individual license). If you do not have an account yet, you can register for one here: https://earthengine.google.com/new_signup/. The authentication process could take a few days to approve the license.
 
 The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf807cdefe8c107783e 
-
-This tool was designed to allow users with no coding ability to generate their own dataset of icebergs. All the user needs to do to attain this dataset is define a region of interest (ROI) and click a few buttons for the data to export to their Google Drive!
 
 Below is a quick run through of how best to use the GUI and attain the data which is required. 
 
