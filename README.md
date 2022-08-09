@@ -59,6 +59,6 @@ Below is a typical error which may arise from this code will be shown. This erro
 
 ![Error](https://user-images.githubusercontent.com/63847501/183460747-32c2da06-c1bb-43b6-9ada-917a3de9cf25.PNG)
 
-Happy iceberging and if you have any questions regarding the tool, please contact Connor Shiggins (Connor.Shiggins@Liverpool.ac.uk)
+Happy iceberging and if you have any questions regarding the tool, please contact Connor Shiggins (Connor.Shiggins@Liverpool.ac.uk).
 
 
