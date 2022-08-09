@@ -4,7 +4,7 @@
 
 This code uses ArcticDEM (version 3) 2-meter strip data to automatically detect icebergs in Google Earth Engine (GEE).
 
-This tool was designed to allow users with no coding experience to generate their own dataset of icebergs through a graphical user interface (GUI). All the user needs to do to attain this dataset is define a region of interest (ROI) and click a few buttons for the data to export to their Google Drive!
+This tool was designed to allow users with no coding experience to generate their own dataset of icebergs through a graphical user interface (GUI). All the user needs to do to attain this dataset is to define a region of interest (ROI) and click a few buttons for the data to export to their Google Drive!
 
 Iceberg detection is based on a threshold above sea level with 1.5 m being the default value. However, larger glaciers which calve large icebergs and have dense fjord cover (e.g. Sermeq Kujalleq: Jakobshavn Isbræ) require a greater threshold value to detect icebergs (3.0 m above sea level) and have been validated. To change the default threshold value, a user can easily navigate in the GEE code editor to line 147 and change the 'var icebergDetectionElevation = ee.Number(1.5)' parameter to the required value. Kangiata Nunaata Sermia and Umiammakku Isbræ's icebergs have been validated on a 1.5 m above sea level threshold and Sermeq Kujalleq (Jakobshavn Isbræ) on a 3.0 m value.
 
