@@ -22,7 +22,7 @@ Once the GUI is accessed through the link above, the GEE browser will open up as
 ![homepage](https://user-images.githubusercontent.com/63847501/183452712-b48e22b9-ae8d-4be4-8ca7-0672714face4.PNG)
 
 ### **Step 2)** 
-A new project has now started so you can now navigate to your glacier of choice (in this example we are using KNS on the southwest coast of Greenland). Draw your ROI before clicking 'OK': 
+A new project has now started so you can navigate to your glacier of choice (in this example we are using KNS on the southwest coast of Greenland). Draw your ROI before clicking 'OK': 
 
 ![ROi](https://user-images.githubusercontent.com/63847501/183454614-b2fed269-2cb6-4669-a9a2-4017b0371808.PNG)
 
