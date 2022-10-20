@@ -10,7 +10,7 @@ Iceberg detection is based on a threshold above sea level with 1.5 m being the d
 
 To be able to use this GUI, a user needs to ensure they have a GEE account (free for individual license). If you do not have an account yet, you can register for one here: https://earthengine.google.com/new_signup/. The authentication process could take a few days to approve the license.
 
-The GUI can be found here: https://code.earthengine.google.com/f38494aa9f268cf807cdefe8c107783e 
+The GUI can be found here: https://code.earthengine.google.com/ad11c00c37b7ad88e28c4493ee6eec64
 
 Below is a quick run through of how best to use the GUI and attain the data which is required. 
 
