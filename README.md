@@ -53,6 +53,7 @@ Now the data will load to the map where: 1) the first ArcticDEM scene in the col
 ![binary](https://user-images.githubusercontent.com/63847501/183455527-d95bec9d-6555-49a9-b92b-dd4b637abd09.PNG)
 
 ### **Step 6)**
+
 The dataset has now been generated, however you have not exported the data yet! A warning bar will appear once the export button has been clicked on the GUI, diverting the user to the 'Tasks' bar (highlighted by the orange colour on the top right of the console). You then need to navigate to the task bar: 
 
 ![Task bar](https://user-images.githubusercontent.com/63847501/183456239-5b7d8d1d-a9bf-44a7-bdd9-a8f8702756ff.PNG)
@@ -63,6 +64,7 @@ Once the 'Tasks' bar has been selected, press the 'RUN' button next to the 'Iceb
 ![Run](https://user-images.githubusercontent.com/63847501/183456545-88c29797-b3b5-4a2f-bce6-9c99eea2540a.PNG)
 
 ### **Step 8)** 
+
 The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The default file format is Shapefile ('SHP'), but you can choose other formats which you see fit: 
 
 ![Export](https://user-images.githubusercontent.com/63847501/183457864-e202779e-71de-45c6-9a0a-e105b517e744.PNG)
@@ -76,5 +78,3 @@ Below is a typical error which may arise from this code will be shown. This erro
 ![Error](https://user-images.githubusercontent.com/63847501/183460747-32c2da06-c1bb-43b6-9ada-917a3de9cf25.PNG)
 
 Happy iceberging and if you have any questions regarding the tool, please contact Connor Shiggins (Connor.Shiggins@Liverpool.ac.uk).
-
-
