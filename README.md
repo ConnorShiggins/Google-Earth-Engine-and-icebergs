@@ -34,8 +34,7 @@ Once this data has been visualised, navigate to a glacier of your choice.
 
 ### **Step 3)** 
 
-Once it has been determined that data at least exists at the glacier of choice, draw your ROI before click 'OK'
-A new project has now started so you can navigate to your glacier of choice (in this example we are using KNS on the southwest coast of Greenland). Draw your ROI before clicking 'OK': 
+Once it has been determined that data at least exists at the glacier of choice (in this example we are using KNS on the southwest coast of Greenland), draw your ROI before clicking 'OK'.
 
 ![Step_3](https://user-images.githubusercontent.com/63847501/196881300-78f3ee8c-feba-460c-8986-2dae470f4bfc.PNG)
 
