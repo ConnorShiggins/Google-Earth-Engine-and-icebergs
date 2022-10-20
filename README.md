@@ -26,6 +26,10 @@ Once the GUI is accessed through the link above, the GEE browser will open up as
 
 A new project has now started. If you wish to visulaise where ArcticDEM strip data exists around calving margins in the summer months, check the box as shown below.
 
+![All_data](https://user-images.githubusercontent.com/63847501/196882284-3ca88e98-8dc1-4ebc-a1e5-97613053c0ee.PNG)
+
+Once this data has been visualised, navigate to a glacier of your choice.
+
 ![Step_2](https://user-images.githubusercontent.com/63847501/196880706-f1e49ec9-c1e2-4ce7-b583-ed00d8009de8.PNG)
 
 ### **Step 3)** 
