@@ -40,7 +40,7 @@ Once it has been determined that data at least exists at the glacier of choice (
 
 ### **Step 4)**
 
-You may wish to define a date range for your data, but with ArcticDEM data being temporally limited it is suggested to 'OK' the default range provided to maximise the volume of data. The user can filter images by specific date ranges and/or months.
+You may wish to define a date range for your data, but with ArcticDEM data being temporally limited it is suggested to 'OK' the default range provided to maximise the volume of data that will be attained. The user can filter images by specific date ranges and/or months.
 
 ![Step_4](https://user-images.githubusercontent.com/63847501/196881501-bc03bebc-f101-4606-a5ec-3c70e3907a57.PNG)
 
