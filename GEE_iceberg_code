@@ -49,6 +49,8 @@ newProjectPanel.add(twitterLabel);
 newProjectPanel.add(newProject);
 Map.add(newProjectPanel);
 
+var startMonth = ee.Number(7);
+var endMonth = ee.Number(10);
 //_______________________________________________________________________________________________________________________
 //Remove the welcome panel and provides instructions to draw ROI polygon
 
@@ -71,6 +73,7 @@ newProject.onClick(function() {
                 geometry = ee.Geometry.LineString(polygon);
             }
         } else {
+            roiPolygonButton.setDisabled(false);
             geometry = ee.Geometry.Polygon([polygon]);
         }
         var manualPolygonDrawn = ui.Map.Layer({
@@ -87,16 +90,20 @@ newProject.onClick(function() {
 });
   var roiPolygonButton = ui.Button({
     label: 'OK',
+    disabled:true,
     onClick: function () {
       if (roiPolygonBox.getValue()===undefined){
         definePolygon = definePolygon.add(ee.Feature(ee.Geometry.Polygon([polygon])));
         polygon = [];
-        for (var i = 0; i < Map.layers().length(); i++) {
-            var layer = Map.layers().get(i);
-            if ('feature collection' === layer.get('name')) {
-                Map.remove(layer);
-            }}
-        Map.remove(Map.layers().get(0));
+        // for (var i = 0; i < Map.layers().length(); i++) {
+            // var layer = Map.layers().get(i);
+            // if ('feature collection' === layer.get('name')) {
+            //     Map.remove(layer);
+            // }}
+            while (Map.layers().length()>0){
+              Map.remove(Map.layers().get(0));
+            }
+        // Map.remove(Map.layers().get(0));
         var geometry = ee.FeatureCollection(definePolygon);
         Map.addLayer(geometry, {color: 'red'}, 'ROI');
       }
@@ -111,7 +118,7 @@ newProject.onClick(function() {
 //_______________________________________________________________________________________________________________________
 //Define data range panel for data collection
 
-      var dateBoxTitle = ui.Label({value: 'Define date range of interest',
+      var dateBoxTitle = ui.Label({value: '2. Define date range of interest',
       style: {
         margin: '10px 10px 0px 7px',
         fontSize: '16px',
@@ -122,43 +129,83 @@ newProject.onClick(function() {
         margin: '5px 10px 5px 7px',
         fontSize: '14px',
         }});
-      var firstDateWords = ui.Label({value: 'Start date (YYYY-MM-DD)',
+      var firstDateWords = ui.Label({value: 'Start date (format: YYYY-MM-DD)',
       style: {
         margin: '10px 10px 0px 7px'
       }});
       var firstDateBox = ui.Textbox({
-        placeholder: 'Default: 2009-01-01'
+        placeholder: 'Default: 2009-01-01',
+        style:{stretch:'horizontal'}
       });
-      var finalDateWords = ui.Label({value: 'End date (YYYY-MM-DD)',
+      var finalDateWords = ui.Label({value: 'End date (format: YYYY-MM-DD)',
       style: {
         margin: '10px 10px 0px 7px'
       }});
       var finalDateBox = ui.Textbox({
-        placeholder: 'Default: 2018-01-01'
+        placeholder: 'Default: 2018-01-01',
+        style:{stretch:'horizontal'}
       });
-      var DEMTab = ui.Label({value: 'When you hit OK - An ArcitcDEM image will load on the map',
+      // Dropdown menus for range of months
+      var months_dropdown = {
+        January: [1],February: [2],March: [3],April: [4],May: [5],
+        June: [6],July: [7],August: [8],September: [9],October: [10],
+        November: [11],December: [12]
+      };
+      var months = [
+          'January', 'February', 'March', 'April', 'May',
+          'June', 'July', 'August', 'September',
+          'October', 'November', 'December'
+          ];
+      function monthNameToNum(monthname) {
+          var month = months.indexOf(monthname)+1;
+          return month;
+      }
+      var select1 = ui.Select({
+        placeholder:'Month range start (default: July)',
+        style:{margin: '10px 10px 1px 1px',stretch:'horizontal'},
+        items: Object.keys(months_dropdown),
+        onChange: function() {
+          startMonth=monthNameToNum(select1.getValue());
+          // Map.unlisten();
+          // glacierNames(glaciers, inputVars);
+        }
+      });
+      var select2 = ui.Select({
+        placeholder:'Month range end (default: October)',
+        style:{margin: '1px 10px 10px 1px',stretch:'horizontal'},
+        items: Object.keys(months_dropdown),
+        onChange: function() {
+          endMonth=monthNameToNum(select2.getValue());
+          // Map.unlisten();
+          // glacierNames(glaciers, inputVars);
+        }
+      });
+      var DEMTab = ui.Label({value: 'When you click OK - An ArcticDEM image will load on the map',
       style: {
         margin: '20px 10px 5px 7px',
         fontSize: '16px',
         fontWeight: 'bold'
         }});
-      var exportInfo = ui.Label({value: 'Once the image has loaded, click the export data button',
+      var exportInfo = ui.Label({value: 'Once the image has loaded, click the export data button (bottom right)',
       style: {
         margin: '20px 10px 5px 7px',
         fontSize: '14px'
         }});
       var dateMenu = ui.Panel({
         style: {
-          position: 'top-center',
+          position: 'top-left',
           padding: '8px 15px'
           }});
-      var dateButton=ui.Button('OK');
+      var dateButton=ui.Button({label:'OK',
+        style:{stretch:'horizontal'}});
       dateMenu.add(dateBoxTitle);
       dateMenu.add(dateBox);
       dateMenu.add(firstDateWords);
       dateMenu.add(firstDateBox);
       dateMenu.add(finalDateWords);
       dateMenu.add(finalDateBox);
+      dateMenu.add(select1);
+      dateMenu.add(select2);
       dateMenu.add(DEMTab);
       dateMenu.add(exportInfo);
       dateMenu.add(dateButton);
@@ -172,8 +219,7 @@ newProject.onClick(function() {
 var geoidAddtion = ee.Number(10);
 var imageAreaCoverage = ee.Number(0.80);
 var icebergDetectionElevation = ee.Number(1.5);
-var startMonth = ee.Number(7);
-var endMonth = ee.Number(10);
+
 var iceDensity = ee.Number(920);//kg/m³
 var seawater = ee.Number(1025);//kg/m³
 var gravity = ee.Number(9.81);//m/s²
@@ -370,7 +416,7 @@ Map.add(exportPanel);
           style: {
           position: 'top-center'}
             });
-          var exportWarning=ui.Label({value: 'WARNING: YOU HAVE NOT EXPORTED DATA YET - HEAD TO THE THE TASKS TAB AND HIT RUN',
+          var exportWarning=ui.Label({value: 'WARNING: YOU HAVE NOT EXPORTED DATA YET - HEAD TO THE THE TASKS TAB AND CLICK RUN',
           style: {
             fontSize: '16px',
             fontWeight: 'bold',
@@ -391,7 +437,7 @@ Map.add(exportPanel);
 //_______________________________________________________________________________________________________________________
 //Instructions for drawing ROI
 
-var roiBoxTitle = ui.Label({value: 'Draw region of interest (ROI)',
+var roiBoxTitle = ui.Label({value: '1. Draw region of interest (ROI)',
   style: {
   fontSize: '16px',
   fontWeight: 'bold'
@@ -401,10 +447,34 @@ var noteOnROI = ui.Label({value: 'Note: Due to ArcticDEM coverage, ensure ROI is
   fontSize: '14px',
   fontWeight: 'bold'
 }});
+var dataCov1=ee.Image('users/Jmleaglacio/calvingGlacierArcticDEMfootprints_RGI_Greenland');
+Map.addLayer(dataCov1, {min:0,max:20,opacity:0.7,palette:['white','red']},'DEM coverage: Jan-Dec',false);
+var dataCov2=ee.Image('users/Jmleaglacio/calvingGlacierArcticDEMfootprints_RGI_Greenland_JulOctOnly');
+Map.addLayer(dataCov2, {min:0,max:20,opacity:0.7,palette:['white','blue']},'DEM coverage: Jul-Oct',false);
+var dataCovCheck1=ui.Checkbox({label:'Show DEM coverage, January-December (scale:1-20)',
+                              value:false
+});
+dataCovCheck1.onChange(function(){
+  if(dataCovCheck1.getValue()===true){
+    Map.layers().get(0).setShown(true);
+  } else {
+    Map.layers().get(0).setShown(false);
+  }
+});
+var dataCovCheck2=ui.Checkbox({label:'Show DEM coverage, July-October (scale:1-20)',
+                              value:false
+});
+dataCovCheck2.onChange(function(){
+  if(dataCovCheck2.getValue()===true){
+    Map.layers().get(1).setShown(true);
+  } else {
+    Map.layers().get(1).setShown(false);
+  }
+});
 var roiInstructuction1 = ui.Label('1) Navigate to ROI');
-var roiInstructuction2 = ui.Label('2) Click on the map to draw a polygon ');
-var roiInstructuction3 = ui.Label('3) Hit OK to confirm the polygon as ROI');
-var redrawROI = ui.Label({value: 'If you wish to redraw your ROI, just hit run and start the process again',
+var roiInstructuction2 = ui.Label('2) Click directly onto the map to draw a polygon ');
+var roiInstructuction3 = ui.Label('3) Click OK to confirm the polygon as ROI');
+var redrawROI = ui.Label({value: 'If you wish to redraw your ROI, just click run and start the process again',
   style: {
   fontSize: '12px',
   fontWeight: 'bold'
@@ -417,6 +487,8 @@ var roiWindow = ui.Panel({
     }});
 roiWindow.add(roiBoxTitle);
 roiWindow.add(noteOnROI);
+roiWindow.add(dataCovCheck1);
+roiWindow.add(dataCovCheck2);
 roiWindow.add(roiInstructuction1);
 roiWindow.add(roiInstructuction2);
 roiWindow.add(roiInstructuction3);
