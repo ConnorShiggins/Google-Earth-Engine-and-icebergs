@@ -64,7 +64,7 @@ Once the 'Tasks' bar has been selected, press the 'RUN' button next to the 'Iceb
 
 ### **Step 8)** 
 
-The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The default file format is Shapefile ('SHP'), but you can choose other formats which you see fit. It also possible to export the output to an asset, just by choosing the 'EE asset' on the box prompt.
+The 'RUN' button then prompts the Task to export the data to your Google Drive. You can choose to change the default task name, drive folder name and filename itself. If working across different glaciers, it would be sensible to name the iceberg dataset after the respective glacier. The default file format is Shapefile ('SHP'), but you can choose other formats which you see fit. It is also possible to export the output to a GEE asset by choosing the 'EE asset' on the box prompt.
 
 ![Export](https://user-images.githubusercontent.com/63847501/183457864-e202779e-71de-45c6-9a0a-e105b517e744.PNG)
 
